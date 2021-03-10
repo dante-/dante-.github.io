@@ -23,3 +23,26 @@ div.button {
 div.button:active {
   background-color: lightblue;
 }
+
+.friendslist {
+  display: flex;
+  flex-direction: column;
+}
+
+#addPeople {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#addPeopleButton {
+  background-color: lightgreen;
+  border-radius: 50%;
+  display: block;
+  height: 1.5em;
+  width: 1.5em;
+  line-height: 1.5em;
+  text-align: center;
+  font-size: 36px;
+  font-weight: bolder;
+}
