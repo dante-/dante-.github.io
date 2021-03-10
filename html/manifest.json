@@ -5,7 +5,7 @@
   "scope": ".",
   "start_url": "/index.html",
   "background_color": "lightgray",
-  "theme_color": "lightred",
+  "theme_color": "red",
   "display": "standalone",
   "orientation": "portrait"
 }
