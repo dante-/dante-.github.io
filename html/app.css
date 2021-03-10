@@ -24,9 +24,30 @@ div.button:active {
   background-color: lightblue;
 }
 
+div.splitAmountBox {
+  position: relative;
+  right: 10px;
+  display: inline-block;
+  background-color: lightgray;
+  border-radius: 50%;
+  padding: 15px;
+}
+
 .friendslist {
   display: flex;
   flex-direction: column;
+}
+
+.friendslistItem {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5px;
+}
+
+div.splitAmount {
+  background-color: transparent;
+  display: inline-block;
 }
 
 #addPeople {
