@@ -14,14 +14,18 @@
   <link rel="apple-touch-icon" href="icons/favicon-180.png" sizes="180x180">
 </head>
 <body>
-  <div id="div1" >I should be the second element</div>
-  <div id="addElm" class="button">Add Element</div>
-  <div id="resetPage" class="button">reset page</div>
-  <script>
-    document.body.onload = addElement;
-    //add on-clicks
-    document.getElementById("addElm").onclick=addElement;
-    document.getElementById("resetPage").onclick=resetPage;
-  </script>
+  <main>
+    <div id="div1" >I should be the second element</div>
+    <div id="addElm" class="button">Add Element</div>
+    <div id="resetPage" class="button">reset page</div>
+  </main>
+  <footer>
+    <script>
+      document.body.onload = addElement;
+      //add on-clicks
+      document.getElementById("addElm").onclick=addElement;
+      document.getElementById("resetPage").onclick=resetPage;
+    </script>
+  </footer>
 </body>
 </html>
