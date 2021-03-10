@@ -4,7 +4,7 @@ function addElement() {
   newDiv.appendChild(newCont);
   newDiv.classList.add("ins");
   const currentDiv = document.getElementById("div1");
-  document.body.insertBefore(newDiv, currentDiv);
+  currentDiv.parentElement.insertBefore(newDiv, currentDiv);
 }
 
 function resetPage() {
