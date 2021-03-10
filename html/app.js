@@ -13,3 +13,11 @@ function resetPage() {
   });
   addElement();
 }
+
+function init() {
+  //add on-clicks
+  document.getElementById("addElm").onclick=addElement;
+  document.getElementById("resetPage").onclick=resetPage;
+  return;
+}
+
