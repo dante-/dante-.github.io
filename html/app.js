@@ -7,3 +7,9 @@ function addElement() {
   document.body.insertBefore(newDiv, currentDiv);
 }
 
+function resetPage() {
+  document.querySelectorAll("div.ins").forEach((elm) => {
+    elm.parentNode.removeChild(elm)
+  });
+  addElement();
+}

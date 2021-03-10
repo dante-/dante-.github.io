@@ -5,14 +5,23 @@
   <link rel="manifest" href="manifest.json">
   <script src="app.js"></script>
   <meta charset="UTF-8">
+  <link rel="icon" href="icons/favicon.svg">
+  <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="icons/favicon-192.png" sizes="192x192">
+  <link rel="icon" href="icons/favicon-512.png" sizes="512x512">
+  <!-- iOS -->
+  <link rel="apple-touch-icon" href="icons/favicon-167.png" sizes="167x167">
+  <link rel="apple-touch-icon" href="icons/favicon-180.png" sizes="180x180">
 </head>
 <body>
   <div id="div1" >I should be the second element</div>
   <div id="addElm" class="button">Add Element</div>
+  <div id="resetPage" class="button">reset page</div>
   <script>
     document.body.onload = addElement;
     //add on-clicks
     document.getElementById("addElm").onclick=addElement;
+    document.getElementById("resetPage").onclick=resetPage;
   </script>
 </body>
 </html>
