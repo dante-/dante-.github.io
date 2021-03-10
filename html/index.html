@@ -1,0 +1,17 @@
+<html manifest="/app.manifest">
+<head>
+  <title>||Working with elements||</title>
+  <link rel="stylesheet" href="app.css">
+  <script src="app.js"></script>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <div id="div1" >I should be the second element</div>
+  <div id="addElm" class="button">Add Element</div>
+  <script>
+    document.body.onload = addElement;
+    //add on-clicks
+    document.getElementById("addElm").onclick=addElement;
+  </script>
+</body>
+</html>

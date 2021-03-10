@@ -1,0 +1,11 @@
+{
+  "name": "ReceiptSplitter",
+  "short_name": "RSplit",
+  "description": "Split your receipts between you and the people who paid for you.",
+  "scope": ".",
+  "start_url": "/index.html",
+  "background_color": "lightgray",
+  "theme_color": "lightred",
+  "display": "standalone",
+  "orientation": "portrait"
+}
