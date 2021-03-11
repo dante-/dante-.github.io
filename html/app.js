@@ -45,7 +45,7 @@ class SplitterColl {
       yield {
         splits_rest: elm.isRestSplitter(),
         personal_sum: elm.getPersonalSlice(),
-        update_text: elm.updateAmountDisplay
+        update_text: (text) => {elm.updateAmountDisplay(text);}
       };
     }
   }
