@@ -40,6 +40,15 @@ class SplitterColl {
     this.splitters.push(newSplitter);
     newSplitter.addGui();
   }
+  *monetaryData () {
+    for (const elm of this.splitters) {
+      yield {
+        splits_rest: elm.isRestSplitter(),
+        personal_sum: elm.getPersonalSlice(),
+        update_text: elm.updateAmountDisplay
+      };
+    }
+  }
 }
 
 const splitters = new SplitterColl();
