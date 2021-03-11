@@ -66,12 +66,23 @@ class MoneyManager {
       rest_splitter_count += elm.splits_rest ? 1 : 0;
       total_personal_amount += elm.personal_sum;
     }
-    console.log("Rest splitters: "+rest_splitter_count);
-    console.log("Total personal amount: "+total_personal_amount);
+    let remain_amount = this.total_amount - total_personal_amount;
+    if (remain_amount != 0 && rest_splitter_count == 0) {
+      this.calcError("Values don't add up. No one to split the rest with.");
+      return;
+    }
+    let split_up_left = Math.floor(remain_amount * 100 / rest_splitter_count) / 100;
+    for (const elm of splitter_data) {
+      elm.update_text(elm.personal_sum + elm.splits_rest ? split_up_left : 0)
+    }
+  }
+  calcError(errmsg){
+    console.log(errmsg);
   }
 }
 
 const m_manager=new MoneyManager(splitters);
+
 class Gui {
   static newFriendListItem (friendName) {
     const newLI = document.createElement("li");
