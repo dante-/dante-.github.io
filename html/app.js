@@ -8,9 +8,9 @@ class SplitterEntry {
   addGui () {
     if(this.guiElm == null) {
       this.guiElm = Gui.newFriendListItem(this.name);
+      Gui.appendToFriendlist(this.guiElm);
     }
     this.guiElm.querySelector("div.splitAmount").onclick=this.editAmount;
-    document.querySelector("#friendsListContainer > ul.friendslist").appendChild(this.guiElm);
   }
   editAmount () {
     console.log("Clicked Amount-display for user "+name);
@@ -51,6 +51,13 @@ class Gui {
     newLI.appendChild(newSplitBox);
     return newLI;
   }
+  static friend_list = null;
+  static appendToFriendlist(new_elm) {
+    this.friend_list.appendChild(new_elm);
+  }
+  static init () {
+    this.friend_list = document.querySelector("#friendsListContainer > ul.friendslist");
+  }
 }
 
 function genID() {
@@ -67,6 +74,7 @@ function dummySplitter() {
 }
 
 function init() {
+  Gui.init();
   //add on-clicks
   document.getElementById("addPeopleButton").onclick=dummySplitter;
   return;
