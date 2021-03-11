@@ -23,10 +23,10 @@ class SplitterEntry {
     });
     return sum;
   }
-  getRestSplitter () {
+  isRestSplitter () {
     return this.splits_rest;
   }
-  updateAmountDisplay () {
+  updateAmountDisplay (new_amount) {
     this.amount.innerText = new_amount;
   }
 }
