@@ -11,9 +11,23 @@ class SplitterEntry {
       Gui.appendToFriendlist(this.guiElm);
     }
     this.guiElm.querySelector("div.splitAmountBox").onclick=() => {this.editAmount();};
+    this.amount = this.guiElm.querySelector("div.splitAmount");
   }
   editAmount () {
     console.log("Clicked Amount-display for user "+this.name);
+  }
+  getPersonalSlice () {
+    let sum = 0;
+    this.personal_slice.forEach((elm) => {
+      sum += elm;
+    });
+    return sum;
+  }
+  getRestSplitter () {
+    return this.splits_rest;
+  }
+  updateAmountDisplay () {
+    this.amount.innerText = new_amount;
   }
 }
 
