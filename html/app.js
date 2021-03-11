@@ -81,7 +81,7 @@ class MoneyManager {
     console.log(errmsg);
   }
   updateTotal(newVal) {
-    this.total_amount = newVal;
+    this.total_amount = newVal || 0;
     this.updateSplitters();
   }
 }
