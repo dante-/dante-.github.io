@@ -108,7 +108,6 @@ class Gui {
     newLI.appendChild(newSplitBox);
     return newLI;
   }
-  static friend_list = null;
   static appendToFriendlist(new_elm) {
     this.friend_list.appendChild(new_elm);
   }
@@ -116,6 +115,7 @@ class Gui {
     this.friend_list = document.querySelector("#friendsListContainer > ul.friendslist");
   }
 }
+Gui.friend_list=null;
 
 function genID() {
   let r4= () => {
