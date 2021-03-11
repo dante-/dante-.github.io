@@ -16,7 +16,7 @@ class SplitterEntry {
   editAmount () {
     console.log("Clicked Amount-display for user "+this.name);
   }
-  getPersonalSlice () {
+  get pers_total() {
     let sum = 0;
     this.personal_slice.forEach((elm) => {
       sum += elm;
@@ -44,7 +44,7 @@ class SplitterColl {
     for (const elm of this.splitters) {
       yield {
         splits_rest: elm.isRestSplitter(),
-        personal_sum: elm.getPersonalSlice(),
+        personal_sum: elm.pers_total,
         update_text: (text) => {elm.updateAmountDisplay(text);}
       };
     }
