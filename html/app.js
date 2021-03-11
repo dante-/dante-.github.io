@@ -10,10 +10,10 @@ class SplitterEntry {
       this.guiElm = Gui.newFriendListItem(this.name);
       Gui.appendToFriendlist(this.guiElm);
     }
-    this.guiElm.querySelector("div.splitAmount").onclick=this.editAmount;
+    this.guiElm.querySelector("div.splitAmountBox").onclick=() => {this.editAmount();};
   }
   editAmount () {
-    console.log("Clicked Amount-display for user "+name);
+    console.log("Clicked Amount-display for user "+this.name);
   }
 }
 
