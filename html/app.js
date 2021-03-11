@@ -53,6 +53,25 @@ class SplitterColl {
 
 const splitters = new SplitterColl();
 
+class MoneyManager {
+  constructor (splitters) {
+    this.splitters = splitters;
+    this.total_amount=0;
+  }
+  updateSplitters () {
+    let splitter_data = [...splitters.monetaryData()];
+    let rest_splitter_count = 0;
+    let total_personal_amount = 0;
+    for (const elm of splitter_data) {
+      rest_splitter_count += elm.splits_rest ? 1 : 0;
+      total_personal_amount += elm.personal_sum;
+    }
+    console.log("Rest splitters: "+rest_splitter_count);
+    console.log("Total personal amount: "+total_personal_amount);
+  }
+}
+
+const m_manager=new MoneyManager(splitters);
 class Gui {
   static newFriendListItem (friendName) {
     const newLI = document.createElement("li");
