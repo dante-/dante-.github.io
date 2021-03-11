@@ -111,11 +111,11 @@ class Gui {
   static appendToFriendlist(new_elm) {
     this.friend_list.appendChild(new_elm);
   }
-  static init () {
-    this.friend_list = document.querySelector("#friendsListContainer > ul.friendslist");
+  static get friend_list() {
+    delete this.friend_list;
+    return this.friend_list=document.querySelector("#friendsListContainer > ul.friendslist");
   }
 }
-Gui.friend_list=null;
 
 function genID() {
   let r4= () => {
@@ -132,7 +132,6 @@ function dummySplitter() {
 }
 
 function init() {
-  Gui.init();
   //add on-clicks
   document.getElementById("addPeopleButton").onclick=dummySplitter;
   document.getElementById("rSumVal").oninput=(e) => {m_manager.updateTotal(e.srcElement.valueAsNumber);};
