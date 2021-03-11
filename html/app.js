@@ -79,6 +79,10 @@ class MoneyManager {
   calcError(errmsg){
     console.log(errmsg);
   }
+  updateTotal(newVal) {
+    this.total_amount = newVal;
+    this.updateSplitters();
+  }
 }
 
 const m_manager=new MoneyManager(splitters);
@@ -124,12 +128,14 @@ function genID() {
 
 function dummySplitter() {
   splitters.add(genID());
+  m_manager.updateSplitters();
 }
 
 function init() {
   Gui.init();
   //add on-clicks
   document.getElementById("addPeopleButton").onclick=dummySplitter;
+  document.getElementById("rSumVal").oninput=(e) => {m_manager.updateTotal(e.srcElement.valueAsNumber);};
   return;
 }
 
