@@ -1,21 +1,15 @@
 class SplitterEntry {
   constructor (name) {
-    this.name = name;
-    this.guiElm = null;
-    this.splits_rest = true;
+    [this.gui_ref, this.name_display, this.amount_display]
+      = Gui.newFriendListItem(name, ()=>{this.editAmount();});
+    this.is_rest_splitter = true;
     this.personal_slice = [];
-  }
-  addGui () {
-    if(this.guiElm == null) {
-      this.guiElm = Gui.newFriendListItem(this.name);
-      Gui.appendToFriendlist(this.guiElm);
-    }
-    this.guiElm.querySelector("div.splitAmountBox").onclick=() => {this.editAmount();};
-    this.amount = this.guiElm.querySelector("div.splitAmount");
+    Gui.appendToFriendlist(this.gui_ref);
   }
   editAmount () {
     console.log("Clicked Amount-display for user "+this.name);
   }
+  //getters & setters
   get pers_total() {
     let sum = 0;
     this.personal_slice.forEach((elm) => {
@@ -23,11 +17,19 @@ class SplitterEntry {
     });
     return sum;
   }
-  isRestSplitter () {
-    return this.splits_rest;
+
+  get name() {
+    return this.name_display.innerText;
   }
-  updateAmountDisplay (new_amount) {
-    this.amount.innerText = new_amount;
+  set name(new_name) {
+    return this.name_display.innerText = new_name;
+  }
+
+  get amount() {
+    return this.amount_display.innerText;
+  }
+  set amount(new_amount) {
+    return this.amount_display.innerText = new_amount;
   }
 }
 
@@ -38,14 +40,13 @@ class SplitterColl {
   add (name) {
     const newSplitter = new SplitterEntry(name);
     this.splitters.push(newSplitter);
-    newSplitter.addGui();
   }
   *monetaryData () {
     for (const elm of this.splitters) {
       yield {
-        splits_rest: elm.isRestSplitter(),
+        splits_rest: elm.is_rest_splitter,
         personal_sum: elm.pers_total,
-        update_text: (text) => {elm.updateAmountDisplay(text);}
+        update_text: (text) => {elm.amount = text;}
       };
     }
   }
@@ -88,7 +89,7 @@ class MoneyManager {
 const m_manager=new MoneyManager(splitters);
 
 class Gui {
-  static newFriendListItem (friendName) {
+  static newFriendListItem (friendName, edit_callback) {
     const newLI = document.createElement("li");
     newLI.classList.add("friendsListItem");
 
@@ -98,6 +99,7 @@ class Gui {
 
     const newSplitBox = document.createElement("div");
     newSplitBox.classList.add("splitAmountBox");
+    newSplitBox.onclick = edit_callback;
     const newSplitAmount = document.createElement("div");
     newSplitAmount.classList.add("splitAmount");
     newSplitAmount.appendChild(document.createTextNode("0.00"));
@@ -106,7 +108,7 @@ class Gui {
 
     newLI.appendChild(newName);
     newLI.appendChild(newSplitBox);
-    return newLI;
+    return [newLI, newName, newSplitAmount];
   }
   static appendToFriendlist(new_elm) {
     this.friend_list.appendChild(new_elm);
