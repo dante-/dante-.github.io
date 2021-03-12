@@ -119,6 +119,48 @@ class Gui {
   }
 }
 
+class EditGui {
+  //workaround to define static value in class-definition
+  static get SoloPiece() {
+    //EditGui.SoloPiece
+    delete this.SoloPiece;
+    return this.SoloPiece = class {
+      constructor(initAmount) {
+        this.piece_input = document.createElement("input");
+        this.piece_input.type = "number";
+        this.piece_input.step = "0.01";
+        this.piece_input.setAttribute("inputmode","decimal");
+
+        const inputContainer=document.createElement("div");
+        inputContainer.classList.add("solo_piece_input");
+        inputContainer.appendChild(this.piece_input);
+
+        this.piece_container = document.createElement("li");
+        this.piece_container.classList.add("solo_piece");
+        this.piece_container.appendChild(inputContainer);
+
+        this.value = "";
+      }
+
+      set value(val) {
+        val=Math.floor(val * 100 + 0.5) / 100 || 0;
+        return this.piece_input.value = val.toFixed(2);
+      }
+      get value() {
+        return this.piece_input.valueAsNumber || 0;
+      }
+    };
+  }
+  constructor (amount_list, name, splits_rest, callback){
+    this.pieces = amount_list.map(elm => new EditGui.SoloPiece(elm));
+    this.pieces.push(new EditGui.SoloPiece(""));
+  }
+  get edit_root() {
+    delete this.edit_root;
+    return this.edit_root = document.getElementById("edit_interface");
+  }
+}
+
 function genID() {
   let r4= () => {
     return Math.floor((1 + Math.random()) * 0x10000)
