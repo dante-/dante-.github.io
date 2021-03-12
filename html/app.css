@@ -67,3 +67,61 @@ div.splitAmount {
   font-size: 36px;
   font-weight: bolder;
 }
+
+#main_interface {
+  display: inherit;
+  position: relative;
+}
+
+#edit_interface {
+  display: inherit;
+}
+
+#edit_interface[hidden] {
+  display:none;
+}
+
+#rSum {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.head > * {
+  margin: 0px 20px;
+}
+
+#isSplitter:checked + label {
+  background-color: green;  
+}
+#isSplitter {
+  display: none;
+}
+#username {
+  max-width: 50%;
+}
+
+.mid ul {
+  display: flex;
+  flex-flow: column;
+}
+
+.solo_piece {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0px;
+}
+.solo_piece_input {
+  width: 80%
+}
+.footer {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+}
