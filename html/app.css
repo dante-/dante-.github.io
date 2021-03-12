@@ -10,6 +10,7 @@ div {
   background-color: red;
 }
 div.button {
+  border-radius: 40px;
   background-color: blue;
   border: none;
   color: white;
