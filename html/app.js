@@ -149,6 +149,20 @@ class EditGui {
       get value() {
         return this.piece_input.valueAsNumber || 0;
       }
+
+      changeCallback () {
+        // The onchange-event seems to be fired when editing is done.
+        let val = this.piece_input.value;
+        if(val == "" || val == 0){
+          this.piece_input.onchange=null;
+          this.piece_input.oninput = () => this.inputCallback;
+          this.changeCallbackExt(this);
+        }
+      }
+      inputCallback () {
+        this.piece_input.oninput=null;
+      }
+
     };
   }
   constructor (amount_list, name, splits_rest, callback){
