@@ -222,6 +222,10 @@ class EditGui {
   set splits_rest (_splits) {
     return this.splitter_box.checked = !!_splits;
   }
+  pieceNowEmpty(piece) {
+    if this.pieces[this.pieces.length - 1] != piece {
+    }
+  }
 }
 
 function genID() {
