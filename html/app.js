@@ -123,28 +123,33 @@ class CustMap extends Map {
   constructor(...args) {
     super(...args);
     this._last=null;
+    this._last_deleted=true;
   }
   set(key,value){
     this._last=key;
+    this._last_deleted=false;
     return super.set(key,value);
   }
   get last() {
-    if(this._last !== null){
-      return this._last;
-    }
-    for (const elm of this.keys()) {
-      this._last = elm;
+    if(this._last_deleted) {
+      if(this.size == 0){
+        return undefined;
+      }
+      for (const elm of this.keys()) {
+        this._last = elm;
+      }
+      this._last_deleted = false;
     }
     return this._last;
   }
   _delete (key) {
     if(key === this._last){
-      this._last = null;
+      this._last_deleted = true;
     }
     return super.delete(key);
   }
   clear() {
-    this._last=null;
+    this._last_deleted = true;
     return super.clear();
   }
 }
