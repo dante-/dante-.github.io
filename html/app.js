@@ -119,6 +119,32 @@ class Gui {
   }
 }
 
+class CustMap extends Map {
+  constructor(...args) {
+    super(...args);
+    this._last=null;
+  }
+  set(key,value){
+    this._last=key;
+    return super.set(key,value);
+  }
+  get last() {
+    if(this._last !== null){
+      return this._last;
+    }
+    for (elm of this.keys()) {
+      this._last = elm;
+    }
+    return this._last;
+  }
+  function delete(key) {
+    if(key === this._last){
+      this._last = null;
+    }
+    return super.delete(key);
+  }
+}
+
 class EditGui {
   //workaround to define static value in class-definition
   static get SoloPiece() {
