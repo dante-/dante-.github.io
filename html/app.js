@@ -125,7 +125,7 @@ class EditGui {
     //EditGui.SoloPiece
     delete this.SoloPiece;
     return this.SoloPiece = class {
-      constructor(initAmount) {
+      constructor(initAmount, manager) {
         this.piece_input = document.createElement("input");
         this.piece_input.type = "number";
         this.piece_input.step = "0.01";
@@ -139,7 +139,14 @@ class EditGui {
         this.piece_container.classList.add("solo_piece");
         this.piece_container.appendChild(inputContainer);
 
-        this.value = "";
+        this.value = initAmount;
+        this.manager = manager;
+
+        if(this.value == 0) {
+          this.piece_input.addEventListener("input",this);
+        } else {
+          this.piece_input.addEventListener("change",this);
+        }
       }
 
       set value(val) {
@@ -150,19 +157,31 @@ class EditGui {
         return this.piece_input.valueAsNumber || 0;
       }
 
-      changeCallback () {
-        // The onchange-event seems to be fired when editing is done.
-        let val = this.piece_input.value;
-        if(val == "" || val == 0){
-          this.piece_input.onchange=null;
-          this.piece_input.oninput = () => this.inputCallback;
-          this.changeCallbackExt(this);
+      handleEvent(e) {
+        let val = e.target.value;
+        switch (e.type) {
+          case "change":
+            if (val == 0) { //val == 0 works on "" and "0"
+              e.target.addEventListener("input",this);
+              e.target.removeEventListener("change",this);
+              this.manager?.pieceNowEmpty?.(this);
+            }
+            return;
+          case "input":
+            if (val !== "") { // if not really empty
+              e.target.addEventListener("change",this);
+              e.target.removeEventListener("input",this);
+              this.manager?.pieceNowFilled?.(this);
+            }
+            return;
         }
       }
-      inputCallback () {
-        this.piece_input.oninput=null;
+      appendTo(element) {
+        return element.appendChild?.(this.piece_container);
       }
-
+      remove() {
+        return this.piece_container.parentNode?.removeChild(this.piece_container);
+      }
     };
   }
   constructor (amount_list, name, splits_rest, callback){
