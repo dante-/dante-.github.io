@@ -144,9 +144,7 @@ class CustMap extends Map {
     return super.delete(key);
   }
 }
-CustMap.prototype.delete = function(key) {
-  return this._delete(key);
-}
+CustMap.prototype.delete = CustMap.prototype._delete;
 
 class EditGui {
   //workaround to define static value in class-definition
