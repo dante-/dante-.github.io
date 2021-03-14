@@ -137,12 +137,15 @@ class CustMap extends Map {
     }
     return this._last;
   }
-  function delete(key) {
+  _delete (key) {
     if(key === this._last){
       this._last = null;
     }
     return super.delete(key);
   }
+}
+CustMap.prototype.delete = function(key) {
+  return this._delete(key);
 }
 
 class EditGui {
