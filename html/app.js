@@ -203,9 +203,6 @@ class EditGui {
     this.splits_rest = splits_rest;
     this.callback = callback; // object with "update"-method
   }
-  get edit_root() {
-    delete this.edit_root;
-    return this.edit_root = document.getElementById("edit_interface");
   }
 }
 
