@@ -132,7 +132,7 @@ class CustMap extends Map {
     if(this._last !== null){
       return this._last;
     }
-    for (elm of this.keys()) {
+    for (const elm of this.keys()) {
       this._last = elm;
     }
     return this._last;
