@@ -143,6 +143,10 @@ class CustMap extends Map {
     }
     return super.delete(key);
   }
+  clear() {
+    this._last=null;
+    return super.clear();
+  }
 }
 CustMap.prototype.delete = CustMap.prototype._delete;
 
