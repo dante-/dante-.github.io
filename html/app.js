@@ -184,9 +184,24 @@ class EditGui {
       }
     };
   }
-  constructor (amount_list, name, splits_rest, callback){
-    this.pieces = amount_list.map(elm => new EditGui.SoloPiece(elm));
-    this.pieces.push(new EditGui.SoloPiece(""));
+  constructor (amount_list, name, splits_rest,
+    callback,
+    edit_root=document.getElementById("edit_interface")){
+    // init members
+    this.name_box=edit_root.getElementById("username");
+    this.splitter_box=edit_root.getElementById("isSplitter");
+    this.piece_container=edit_root.querySelector("div.mid > ul");
+    this.edit_root=edit_root
+
+    // create edits for pieces
+    this.pieces = amount_list.map(elm => new EditGui.SoloPiece(elm, this));
+    this.pieces.push(new EditGui.SoloPiece("", this));
+    for (const elm of this.pieces){
+      elm.appendTo(this.piece_container);
+    }
+    this.name = name;
+    this.splits_rest = splits_rest;
+    this.callback = callback; // object with "update"-method
   }
   get edit_root() {
     delete this.edit_root;
