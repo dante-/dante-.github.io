@@ -203,6 +203,12 @@ class EditGui {
     this.splits_rest = splits_rest;
     this.callback = callback; // object with "update"-method
   }
+  teardown () {
+    this.name="";
+    this.splits_rest=true;
+    for (const elm of this.pieces) {
+      elm.remove();
+    }
   }
 }
 
