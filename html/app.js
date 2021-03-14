@@ -210,6 +210,18 @@ class EditGui {
       elm.remove();
     }
   }
+  set name(_name) {
+    return this.name_box.value = _name;
+  }
+  get name() {
+    return this.name_box.value;
+  }
+  get splits_rest () {
+    return this.splitter_box.checked;
+  }
+  set splits_rest (_splits) {
+    return this.splitter_box.checked = !!_splits;
+  }
 }
 
 function genID() {
