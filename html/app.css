@@ -1,5 +1,6 @@
 :root {
-  --global-bg-c: #fff1cc;
+  /*--global-bg-c: #fff1cc*/;
+  --global-bg-c: #eab6fc;
 }
 html {
   height: 100%;
@@ -80,6 +81,7 @@ div.splitAmount {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-bottom: 2%;
 }
 
 #addPeopleButton {
@@ -94,6 +96,15 @@ div.splitAmount {
   height: 100%;
 }
 
+#noFriends {
+  display: none;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+#noFriends:only-child {
+  display: flex;
+}
 
 #edit_interface {
   display: block;
@@ -136,7 +147,8 @@ div.splitAmount {
 
 .mid {
   flex: 1 1 auto;
-  min-height: 1px;
+  height: 100%;
+  overflow: auto;
 }
 
 .footer {
@@ -164,8 +176,11 @@ div.splitAmount {
 .mid ul {
   display: flex;
   flex-flow: column;
-  height: 100%;
-  overflow: auto;
+  /*! height: 100%; */
+  /*! overflow: auto; */
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
 }
 
 .solo_piece {
@@ -174,6 +189,6 @@ div.splitAmount {
   margin: 5px 0px;
 }
 .solo_piece_input {
-  width: 80%
+  width: 100%;
 }
 
