@@ -16,15 +16,15 @@
 </head>
 <body>
   <header>
-    <h1>Receipt Splitter</h1>
-    <h4>Split your receipts among you</h4>
+    <h4>Receipt Splitter</h4>
   </header>
   <main>
     <div id="main_interface">
-      <div id="rSum">Total moneys: <input type="number" inputmode="decimal" step="0.01" id="rSumVal"></div>
+      <div id="rSum">Grand Total: <input type="number" inputmode="decimal" step="0.01" id="rSumVal"></div>
       <div id="addPeople">
         <div>Add splitter</div>
-        <div id="addPeopleButton">+</div>
+        <img src="add_btn.svg" id="addPeopleButton" />
+        <!-- <div id="addPeopleButton">+</div> -->
       </div>
       <div id="noFriends">Add some people to split the bill with.</div>
       <div id="friendsListContainer"><ul class="friendslist">
@@ -32,59 +32,20 @@
       </div>
     </div>
     <div id="edit_interface" hidden>
-      <div class="head">
-        <input id="username" type="text">
-        <input id="isSplitter" type="checkbox">
-        <label for="isSplitter">splits remainder</label>
+      <div id="edit_interface_inner">
+        <div class="head">
+          <input id="username" type="text">
+          <input id="isSplitter" type="checkbox">
+          <label for="isSplitter">splits remainder</label>
+        </div>
+        <div class="mid">
+        </div>
+        <div class="footer">
+          <div id="approve_edit" class="button">OK</div>
+          <div id="cancel_edit" class="button">Cancel</div>
+        </div>
       </div>
-      <div class="mid">
-        <ul>
-          <li class="solo_piece">
-            <div class="solo_piece_input">
-              <input type="number" inputmode="decimal" class="solo_piece_input" step="0.01">
-            </div>
-          </li>
-          <li class="solo_piece">
-            <div class="solo_piece_input">
-              <input type="number" inputmode="decimal" class="solo_piece_input" step="0.01">
-            </div>
-          </li>
-          <li class="solo_piece">
-            <div class="solo_piece_input">
-              <input type="number" inputmode="decimal" class="solo_piece_input" step="0.01">
-            </div>
-          </li>
-          <li class="solo_piece">
-            <div class="solo_piece_input">
-              <input type="number" inputmode="decimal" class="solo_piece_input" step="0.01">
-            </div>
-          </li>
-          <li class="solo_piece">
-            <div class="solo_piece_input">
-              <input type="number" inputmode="decimal" class="solo_piece_input" step="0.01">
-            </div>
-          </li>
-          <li class="solo_piece">
-            <div class="solo_piece_input">
-              <input type="number" inputmode="decimal" class="solo_piece_input" step="0.01">
-            </div>
-          </li>
-          <li class="solo_piece">
-            <div class="solo_piece_input">
-              <input type="number" inputmode="decimal" class="solo_piece_input" step="0.01">
-            </div>
-          </li>
-          <li class="solo_piece">
-            <div class="solo_piece_input">
-              <input type="number" inputmode="decimal" class="solo_piece_input" step="0.01">
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="footer">
-        <div id="approve_edit" class="button">OK</div>
-        <div id="cancel_edit" class="button">Cancel</div>
-      </div>
+    </div>
   </main>
   <footer>
     <script>

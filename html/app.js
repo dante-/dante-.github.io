@@ -7,7 +7,8 @@ class SplitterEntry {
     Gui.appendToFriendlist(this.gui_ref);
   }
   editAmount () {
-    console.log("Clicked Amount-display for user "+this.name);
+    let edit = new EditGui(this.personal_slice, this.name, this.is_rest_splitter, this);
+    edit.show();
   }
   //getters & setters
   get pers_total() {
@@ -30,6 +31,11 @@ class SplitterEntry {
   }
   set amount(new_amount) {
     return this.amount_display.innerText = new_amount;
+  }
+  update(amounts, name, is_splitter){
+    this.personal_slice=amounts;
+    this.name=name;
+    this.is_rest_splitter=is_splitter;
   }
 }
 
@@ -74,7 +80,7 @@ class MoneyManager {
     }
     let split_up_left = Math.floor(remain_amount * 100 / rest_splitter_count) / 100;
     for (const elm of splitter_data) {
-      elm.update_text(elm.personal_sum + elm.splits_rest ? split_up_left : 0)
+      elm.update_text(elm.personal_sum + (elm.splits_rest ? split_up_left : 0));
     }
   }
   calcError(errmsg){
@@ -166,6 +172,7 @@ class EditGui {
         this.piece_input.type = "number";
         this.piece_input.step = "0.01";
         this.piece_input.setAttribute("inputmode","decimal");
+        this.piece_input.classList.add("solo_piece_input");
 
         const inputContainer=document.createElement("div");
         inputContainer.classList.add("solo_piece_input");
@@ -224,26 +231,36 @@ class EditGui {
     callback,
     edit_root=document.getElementById("edit_interface")){
     // init members
-    this.name_box=edit_root.getElementById("username");
-    this.splitter_box=edit_root.getElementById("isSplitter");
-    this.piece_container=edit_root.querySelector("div.mid > ul");
+    this.name_box=edit_root.querySelector("#username");
+    this.splitter_box=edit_root.querySelector("#isSplitter");
+    this.piece_container=document.createElement("ul");
+    edit_root.querySelector("div.mid").appendChild(this.piece_container);
     this.edit_root=edit_root
 
     // create edits for pieces
-    this.pieces = amount_list.map(elm => new EditGui.SoloPiece(elm, this));
-    this.pieces.push(new EditGui.SoloPiece("", this));
-    for (const elm of this.pieces){
-      elm.appendTo(this.piece_container);
+    this.pieces = new CustMap();
+    amount_list.push(0);
+    for (const piece of amount_list.map(elm => new EditGui.SoloPiece(elm, this))){
+      this.pieces.set(piece);
+      piece.appendTo(this.piece_container);
+    }
+    for (const elm of this.edit_root.querySelectorAll(".button")){
+      elm.addEventListener("click",this);
     }
     this.name = name;
     this.splits_rest = splits_rest;
     this.callback = callback; // object with "update"-method
   }
+  show () {
+    this.edit_root.hidden=false;
+  }
   teardown () {
+    this.edit_root.hidden=true;
     this.name="";
     this.splits_rest=true;
-    for (const elm of this.pieces) {
-      elm.remove();
+    this.edit_root.querySelector("div.mid").removeChild(this.piece_container);
+    for (const elm of this.edit_root.querySelectorAll(".button")){
+      elm.removeEventListener("click",this);
     }
   }
   set name(_name) {
@@ -259,7 +276,32 @@ class EditGui {
     return this.splitter_box.checked = !!_splits;
   }
   pieceNowEmpty(piece) {
-    if (this.pieces[this.pieces.length - 1] != piece) {
+    if (this.pieces.last != piece) {
+      this.pieces.delete(piece);
+      piece.remove();
+    }
+  }
+  pieceNowFilled(piece) {
+    if(this.pieces.last == piece) {
+      this.pieces.set(new EditGui.SoloPiece(0, this));
+      this.pieces.last.appendTo(this.piece_container);
+    }
+  }
+  handleEvent(e) {
+    switch(e.target?.id) {
+      case "approve_edit":
+        const new_amounts=[];
+        for (const key of this.pieces.keys()){
+          if(key.value != 0){
+            new_amounts.push(key.value);
+          }
+        }
+        this.callback.update?.(new_amounts, this.name, this.splits_rest);
+        this.teardown()
+        break;
+      case "cancel_edit":
+        this.teardown();
+        break;
     }
   }
 }
@@ -283,5 +325,19 @@ function init() {
   document.getElementById("addPeopleButton").onclick=dummySplitter;
   document.getElementById("rSumVal").oninput=(e) => {m_manager.updateTotal(e.srcElement.valueAsNumber);};
   return;
+}
+
+class EventCollector {
+  constructor(selector_string, e_type="click"){
+    this.caughtEvents=new Map();
+    for (const elm of document.querySelectorAll(selector_string)) {
+      this.caughtEvents.set(elm);
+      elm.addEventListener(e_type, this);
+    }
+  }
+  handleEvent(e) {
+    this.caughtEvents.set(e.target,e);
+    e.target.removeEventListener(e.type, this);
+  }
 }
 

@@ -1,13 +1,32 @@
+:root {
+  --global-bg-c: #fff1cc;
+}
+html {
+  height: 100%;
+  margin: 0;
+}
 
 body {
   font-size-adjust: 1.3;
   font-size: 22;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--global-bg-c);
 }
+
+header {
+  flex: 0 1 auto;
+}
+main {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
 div.ins {
   background-color: green;
-}
-div {
-  background-color: red;
 }
 div.button {
   border-radius: 40px;
@@ -26,9 +45,9 @@ div.button:active {
 }
 
 div.splitAmountBox {
-  position: relative;
+  /*! position: relative; */
   right: 10px;
-  display: inline-block;
+  /*! display: inline-block; */
   background-color: lightgray;
   border-radius: 50%;
   padding: 15px;
@@ -37,6 +56,12 @@ div.splitAmountBox {
 .friendslist {
   display: flex;
   flex-direction: column;
+  width: 90%;
+  left: 5%;
+  position: relative;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
 }
 
 .friendslistItem {
@@ -58,24 +83,36 @@ div.splitAmount {
 }
 
 #addPeopleButton {
-  background-color: lightgreen;
-  border-radius: 50%;
   display: block;
-  height: 1.5em;
-  width: 1.5em;
-  line-height: 1.5em;
-  text-align: center;
-  font-size: 36px;
-  font-weight: bolder;
+  height: 3ex;
 }
 
 #main_interface {
   display: inherit;
   position: relative;
+  overflow-y: scroll;
+  height: 100%;
 }
 
+
 #edit_interface {
-  display: inherit;
+  display: block;
+  z-index: 4;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background: #9a9a9aa0;
+}
+
+#edit_interface_inner {
+  position: relative;
+  height: 100%;
+  left: 5%;
+  width: 90%;
+  margin: 0;
+  display: flex;
+  flex-flow: column;
 }
 
 #edit_interface[hidden] {
@@ -86,12 +123,28 @@ div.splitAmount {
   position: sticky;
   top: 0;
   display: flex;
+  background-color: var(--global-bg-c);
   justify-content: center;
+  z-index: 1;
 }
 
 .head {
   display: flex;
   justify-content: space-between;
+  flex: 0 1 auto;
+}
+
+.mid {
+  flex: 1 1 auto;
+  min-height: 1px;
+}
+
+.footer {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+  flex: 0 1 auto;
+  margin-bottom: 1%;
 }
 
 .head > * {
@@ -111,6 +164,8 @@ div.splitAmount {
 .mid ul {
   display: flex;
   flex-flow: column;
+  height: 100%;
+  overflow: auto;
 }
 
 .solo_piece {
@@ -121,8 +176,4 @@ div.splitAmount {
 .solo_piece_input {
   width: 80%
 }
-.footer {
-  display: flex;
-  align-content: center;
-  justify-content: space-evenly;
-}
+
