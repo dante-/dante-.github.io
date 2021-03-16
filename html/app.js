@@ -1,10 +1,11 @@
 class SplitterEntry {
-  constructor (name) {
+  constructor (name, update_cb) {
     [this.gui_ref, this.name_display, this.amount_display]
       = Gui.newFriendListItem(name, ()=>{this.editAmount();});
     this.is_rest_splitter = true;
     this.personal_slice = [];
     Gui.appendToFriendlist(this.gui_ref);
+    this.update_cb=update_cb; //has to implement method update(e)
   }
   editAmount () {
     let edit = new EditGui(this.personal_slice, this.name, this.is_rest_splitter, this);
@@ -36,15 +37,17 @@ class SplitterEntry {
     this.personal_slice=amounts;
     this.name=name;
     this.is_rest_splitter=is_splitter;
+    this.update_cb.update(this);
   }
 }
 
 class SplitterColl {
   constructor () {
     this.splitters = [];
+    this.update_handlers = new Set();
   }
   add (name) {
-    const newSplitter = new SplitterEntry(name);
+    const newSplitter = new SplitterEntry(name,this);
     this.splitters.push(newSplitter);
   }
   *monetaryData () {
@@ -56,6 +59,20 @@ class SplitterColl {
       };
     }
   }
+  addUpdateListener(handler) { //must implement handler.update(SplitterColl e)
+    if(typeof(handler.update) != "function"){
+      throw(handler +"contains no function 'update'");
+    }
+    return !!this.update_handlers.add(handler);
+  }
+  removeUpdateListener(handler) {
+    return this.update_handlers.delete(handler);
+  }
+  update(e) { //only intended to be used for SplitterEntry
+    for (const elm of this.update_handlers){
+      elm.update(this);
+    }
+  }
 }
 
 const splitters = new SplitterColl();
@@ -63,6 +80,7 @@ const splitters = new SplitterColl();
 class MoneyManager {
   constructor (splitters) {
     this.splitters = splitters;
+    this.splitters.addUpdateListener(this);
     this.total_amount=0;
   }
   updateSplitters () {
@@ -88,6 +106,13 @@ class MoneyManager {
   }
   updateTotal(newVal) {
     this.total_amount = newVal || 0;
+    this.updateSplitters();
+  }
+  update(e) {
+    //implement SplitterColl-interface
+    if(e !== this.splitters){
+      return;
+    }
     this.updateSplitters();
   }
 }
