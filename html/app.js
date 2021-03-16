@@ -333,6 +333,10 @@ class EditGui {
   }
   piecePressedEnter(piece){
     if(this.pieces.last == piece){
+      if(piece.value == 0){
+        this.submit();
+        return;
+      }
       const nu_piece = new EditGui.SoloPiece(0, this);
       this.pieces.set(nu_piece);
       nu_piece.appendTo(this.piece_container);
@@ -344,19 +348,22 @@ class EditGui {
   handleEvent(e) {
     switch(e.target?.id) {
       case "approve_edit":
-        const new_amounts=[];
-        for (const key of this.pieces.keys()){
-          if(key.value != 0){
-            new_amounts.push(key.value);
-          }
-        }
-        this.callback.update?.(new_amounts, this.name, this.splits_rest);
-        this.teardown()
+        this.submit();
         break;
       case "cancel_edit":
         this.teardown();
         break;
     }
+  }
+  submit(){
+    const new_amounts=[];
+    for (const key of this.pieces.keys()){
+      if(key.value != 0){
+        new_amounts.push(key.value);
+      }
+    }
+    this.callback.update?.(new_amounts, this.name, this.splits_rest);
+    this.teardown()
   }
 }
 
