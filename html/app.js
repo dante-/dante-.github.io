@@ -216,6 +216,7 @@ class EditGui {
         } else {
           this.piece_input.addEventListener("change",this);
         }
+        this.piece_input.addEventListener("keydown",this);
       }
 
       set value(val) {
@@ -238,14 +239,25 @@ class EditGui {
               e.target.removeEventListener("change",this);
               this.manager?.pieceNowEmpty?.(this);
             }
-            return;
+            break;
           case "input":
+            break;
             if (val !== "") { // if not really empty
               e.target.addEventListener("change",this);
               e.target.removeEventListener("input",this);
               this.manager?.pieceNowFilled?.(this);
             }
-            return;
+            break;
+          case "keydown":
+            switch(e.key){
+              case "Enter":
+                this.manager?.piecePressedEnter?.(this);
+                break;
+            }
+            break;
+          default:
+            console.log(e);
+            break;
         }
       }
       appendTo(element) {
@@ -253,6 +265,9 @@ class EditGui {
       }
       remove() {
         return this.piece_container.parentNode?.removeChild(this.piece_container);
+      }
+      focus() {
+        this.piece_input.focus();
       }
     };
   }
@@ -314,6 +329,16 @@ class EditGui {
     if(this.pieces.last == piece) {
       this.pieces.set(new EditGui.SoloPiece(0, this));
       this.pieces.last.appendTo(this.piece_container);
+    }
+  }
+  piecePressedEnter(piece){
+    if(this.pieces.last == piece){
+      const nu_piece = new EditGui.SoloPiece(0, this);
+      this.pieces.set(nu_piece);
+      nu_piece.appendTo(this.piece_container);
+      nu_piece.focus();
+    } else {
+      this.pieces.last.focus();
     }
   }
   handleEvent(e) {
