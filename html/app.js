@@ -241,7 +241,6 @@ class EditGui {
             }
             break;
           case "input":
-            break;
             if (val !== "") { // if not really empty
               e.target.addEventListener("change",this);
               e.target.removeEventListener("input",this);
@@ -327,8 +326,11 @@ class EditGui {
   }
   pieceNowFilled(piece) {
     if(this.pieces.last == piece) {
-      this.pieces.set(new EditGui.SoloPiece(0, this));
-      this.pieces.last.appendTo(this.piece_container);
+      const nu_piece = new EditGui.SoloPiece(0, this);
+      this.pieces.set(nu_piece);
+      nu_piece.appendTo(this.piece_container);
+      nu_piece.focus();
+      piece.focus();
     }
   }
   piecePressedEnter(piece){
