@@ -196,6 +196,7 @@ class EditGui {
         this.piece_input = document.createElement("input");
         this.piece_input.type = "number";
         this.piece_input.step = "0.01";
+        this.piece_input.placeholder="0";
         this.piece_input.setAttribute("inputmode","decimal");
         this.piece_input.classList.add("solo_piece_input");
 
@@ -219,6 +220,9 @@ class EditGui {
 
       set value(val) {
         val=Math.floor(val * 100 + 0.5) / 100 || 0;
+        if (val == 0){
+          return this.piece_input.value = "";
+        }
         return this.piece_input.value = val.toFixed(2);
       }
       get value() {
