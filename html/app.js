@@ -111,22 +111,32 @@ class MoneyManager {
   get total_amount() {
     return Gui.amountInput || 0;
   }
-  updateSplitters () {
+  updateSplitters () { //calculation in cents
     let splitter_data = [...splitters.monetaryData()];
     let rest_splitter_count = 0;
     let total_personal_amount = 0;
+    let total_cents = this.total_amount * 100;
     for (const elm of splitter_data) {
       rest_splitter_count += elm.splits_rest ? 1 : 0;
-      total_personal_amount += elm.personal_sum;
+      total_personal_amount += Math.round(elm.personal_sum * 100); //conv to cents
     }
-    let remain_amount = this.total_amount - total_personal_amount;
+    let remain_amount = total_cents - total_personal_amount;
     if (remain_amount != 0 && rest_splitter_count == 0) {
       this.calcError("Values don't add up. No one to split the rest with.");
-      return;
     }
-    let split_up_left = Math.floor(remain_amount * 100 / rest_splitter_count) / 100;
+    let split_per_splitter = Math.floor(remain_amount / rest_splitter_count); //may leave up to n-1 cents
+    let left_over_cents = remain_amount - split_per_splitter * rest_splitter_count; //how many cents left?
+    let pers_tmp; //calc-buffer
     for (const elm of splitter_data) {
-      elm.update_text(elm.personal_sum + (elm.splits_rest ? split_up_left : 0));
+      pers_tmp=Math.round(elm.personal_sum * 100); // convert to cents
+      if(elm.splits_rest) {
+        pers_tmp += split_per_splitter;
+        if(left_over_cents) { //0 -> false
+          pers_tmp++;
+          left_over_cents--;
+        }
+      }
+      elm.update_text((pers_tmp / 100).toFixed(2));
     }
   }
   calcError(errmsg){
