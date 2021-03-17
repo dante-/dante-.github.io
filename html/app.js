@@ -73,6 +73,32 @@ class SplitterColl {
       elm.update(this);
     }
   }
+  handleEvent(e) {
+    switch(e.target) {
+      case Gui.add_people_button:
+        this.add_splitter_from_Gui();
+        break;
+      case Gui.add_people_name:
+        if(e.type == "keydown" && e.key == "Enter"){
+          this.add_splitter_from_Gui();
+        }
+        break;
+      default:
+        console.log("Event source unknown to SplitterColl.");
+        console.log(e);
+        break;
+    }
+  }
+  add_splitter_from_Gui(){
+    let name = Gui.nameInput;
+    if(name == ""){
+      Gui.add_people_name.blur();
+      return;
+    }
+    this.add(name);
+    Gui.nameInput="";
+    this.update();
+  }
 }
 
 const splitters = new SplitterColl();
@@ -147,6 +173,37 @@ class Gui {
   static get friend_list() {
     delete this.friend_list;
     return this.friend_list=document.querySelector("#friendsListContainer > ul.friendslist");
+  }
+  static get add_people_button() {
+    delete this.add_people_button;
+    return this.add_people_button=document.getElementById("addPeopleButton");
+  }
+  static get add_people_name() {
+    delete this.add_people_name;
+    return this.add_people_name=document.getElementById("addPeopleName");
+  }
+  static set nameInput(name) {
+    if(typeof(name) == "string"){
+      return this.add_people_name.value = name;
+    }
+    throw 'Parameter name not of type string.';
+  }
+  static get nameInput() {
+    return this.add_people_name.value;
+  }
+  static get grand_total_input () {
+    delete this.grand_total_input;
+    return this.grand_total_input = document.getElementById("rSumVal");
+  }
+  static set amountInput(amount) {
+    amount = +amount;
+    if(typeof(amount) != "number" || isNaN(amount)){
+      throw("Amount is not a valid number.");
+    }
+    return this.grand_total_input.valueAsNumber = amount;
+  }
+  static get amountInput() {
+    return this.grand_total_input.valueAsNumber;
   }
 }
 
@@ -385,8 +442,8 @@ function dummySplitter() {
 
 function init() {
   //add on-clicks
-  document.getElementById("addPeopleButton").onclick=dummySplitter;
-  document.getElementById("rSumVal").oninput=(e) => {m_manager.updateTotal(e.srcElement.valueAsNumber);};
+  document.getElementById("addPeopleButton").addEventListener("click",splitters);
+  document.getElementById("addPeopleName").addEventListener("keydown",splitters);
   return;
 }
 
