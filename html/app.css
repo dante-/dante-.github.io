@@ -1,6 +1,7 @@
 :root {
   /*--global-bg-c: #fff1cc*/;
   --global-bg-c: #eab6fc;
+  --item-sep-col: #e088ff;
 }
 html {
   height: 100%;
@@ -15,6 +16,11 @@ body {
   height: 100%;
   overflow: hidden;
   background-color: var(--global-bg-c);
+}
+
+input {
+  
+  font-size: 22px;
 }
 
 header {
@@ -70,6 +76,14 @@ div.splitAmountBox {
   justify-content: space-between;
   width: 100%;
   padding: 5px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-color: var(--item-sep-col, gray);
+}
+
+.friendsListItem:nth-child(2) {
+  border-top-style: solid;
+  border-top-width: 1px;
 }
 
 div.splitAmount {
