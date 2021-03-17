@@ -230,6 +230,10 @@ class Gui {
     this.grand_total_input.disabled=true;
     this.add_people_name.disabled=true;
   }
+  static get clear_all() {
+    delete this.clear_all;
+    return this.clear_all = document.getElementById("clear_all_button");
+  }
 }
 
 class CustMap extends Map {
