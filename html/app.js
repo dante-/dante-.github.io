@@ -107,7 +107,9 @@ class MoneyManager {
   constructor (splitters) {
     this.splitters = splitters;
     this.splitters.addUpdateListener(this);
-    this.total_amount=0;
+  }
+  get total_amount() {
+    return Gui.amountInput || 0;
   }
   updateSplitters () {
     let splitter_data = [...splitters.monetaryData()];
@@ -130,16 +132,21 @@ class MoneyManager {
   calcError(errmsg){
     console.log(errmsg);
   }
-  updateTotal(newVal) {
-    this.total_amount = newVal || 0;
-    this.updateSplitters();
-  }
   update(e) {
     //implement SplitterColl-interface
     if(e !== this.splitters){
       return;
     }
     this.updateSplitters();
+  }
+  handleEvent(e) {
+    switch(e.target) {
+      case Gui.grand_total_input:
+        this.updateSplitters();
+        break;
+      default:
+        console.log(e);
+    }
   }
 }
 
@@ -444,6 +451,7 @@ function init() {
   //add on-clicks
   document.getElementById("addPeopleButton").addEventListener("click",splitters);
   document.getElementById("addPeopleName").addEventListener("keydown",splitters);
+  document.getElementById("rSumVal").addEventListener("change",m_manager);
   return;
 }
 
