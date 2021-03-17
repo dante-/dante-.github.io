@@ -222,6 +222,14 @@ class Gui {
   static get amountInput() {
     return this.grand_total_input.valueAsNumber;
   }
+  static enableInputs() {
+    this.grand_total_input.disabled=false;
+    this.add_people_name.disabled=false;
+  }
+  static disableInputs() {
+    this.grand_total_input.disabled=true;
+    this.add_people_name.disabled=true;
+  }
 }
 
 class CustMap extends Map {
@@ -369,9 +377,11 @@ class EditGui {
     this.callback = callback; // object with "update"-method
   }
   show () {
+    Gui.disableInputs();
     this.edit_root.hidden=false;
   }
   teardown () {
+    Gui.enableInputs();
     this.edit_root.hidden=true;
     this.name="";
     this.splits_rest=true;
