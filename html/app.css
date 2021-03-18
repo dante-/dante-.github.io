@@ -56,7 +56,7 @@ div.splitAmountBox {
   right: 10px;
   /*! display: inline-block; */
   background-color: lightgray;
-  border-radius: 50%;
+  border-radius: 50px;
   padding: 15px;
 }
 
@@ -72,19 +72,26 @@ div.splitAmountBox {
 }
 
 .friendslistItem {
-  display: flex;
-  justify-content: space-between;
   width: 100%;
   padding: 5px;
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-color: var(--item-sep-col, gray);
+  background-color: red;
   position: relative;
 }
 
 .friendsListItem:nth-child(2) {
   border-top-style: solid;
   border-top-width: 1px;
+}
+
+.friendsListSlider {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  background-color: var(--global-bg-c);
 }
 
 div.splitAmount {

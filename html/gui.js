@@ -2,24 +2,29 @@ import {SwipeToDeleteController} from "./swipe_ctrl.js";
 
 export class Gui {
   static newFriendListItem (friendName, edit_callback) {
-    const newLI = document.createElement("li");
-    newLI.classList.add("friendsListItem");
+    const newSplitAmount = document.createElement("div");
+    newSplitAmount.classList.add("splitAmount");
+    newSplitAmount.appendChild(document.createTextNode("0.00"));
+
+    const newSplitBox = document.createElement("div");
+    newSplitBox.classList.add("splitAmountBox");
+    newSplitBox.onclick = edit_callback;
+    newSplitBox.appendChild(newSplitAmount);
+    newSplitBox.appendChild(document.createTextNode("€"));
 
     const newName = document.createElement("div");
     newName.appendChild(document.createTextNode(friendName));
     newName.classList.add("friendName");
 
-    const newSplitBox = document.createElement("div");
-    newSplitBox.classList.add("splitAmountBox");
-    newSplitBox.onclick = edit_callback;
-    const newSplitAmount = document.createElement("div");
-    newSplitAmount.classList.add("splitAmount");
-    newSplitAmount.appendChild(document.createTextNode("0.00"));
-    newSplitBox.appendChild(newSplitAmount);
-    newSplitBox.appendChild(document.createTextNode("€"));
+    const slider = document.createElement("div");
+    slider.classList.add("friendsListSlider");
+    slider.appendChild(newName);
+    slider.appendChild(newSplitBox);
 
-    newLI.appendChild(newName);
-    newLI.appendChild(newSplitBox);
+    const newLI = document.createElement("li");
+    newLI.classList.add("friendsListItem");
+    newLI.appendChild(slider);
+
     this.swicon.add(newLI);
     return [newLI, newName, newSplitAmount];
   }
