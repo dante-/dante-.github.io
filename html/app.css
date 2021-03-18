@@ -79,6 +79,7 @@ div.splitAmountBox {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-color: var(--item-sep-col, gray);
+  position: relative;
 }
 
 .friendsListItem:nth-child(2) {
