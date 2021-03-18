@@ -1,3 +1,5 @@
+import {footest} from "./test.js";
+
 class SplitterEntry {
   constructor (name, update_cb) {
     [this.gui_ref, this.name_display, this.amount_display]
@@ -574,3 +576,5 @@ class SwipeToDeleteController {
     param.clientX = e.clientX;
   }
 }
+
+window.onload=init;
