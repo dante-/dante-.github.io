@@ -516,13 +516,13 @@ class SwipeToDeleteController {
     switch(e.type) {
       case "mousedown":
         e.preventDefault();
-        e.target.removeEventListener("mousedown",this);
+        this.in_motion=e.currentTarget;
+        this.in_motion.removeEventListener("mousedown",this);
         document.body.addEventListener("mousemove",this);
         document.body.addEventListener("mouseup",this);
-        param = this.elements.get(e.target);
+        param = this.elements.get(this.in_motion);
         param.clientX = e.clientX;
         param.mov = 0;
-        this.in_motion=e.target;
         break;
       case "mouseup":
         document.body.removeEventListener("mouseup",this);
@@ -538,8 +538,8 @@ class SwipeToDeleteController {
         e.preventDefault();
         const first_touch = e.changedTouches[0];
         this.master_touch = first_touch.identifier;
-        this.in_motion=first_touch.target;
-        param = this.elements.get(first_touch.target);
+        this.in_motion=first_touch.currentTarget;
+        param = this.elements.get(this.in_motion);
         param.mov = 0;
         param.clientX = first_touch.clientX;
         break;
@@ -562,7 +562,7 @@ class SwipeToDeleteController {
     for(let touches = e.changedTouches, i = 0;
       i < touches.length && (my_touch = touches[i]).identifier != this.master_touch;
       i++);
-    if(my_touch.identifier === this.master_touch){ //unsuccessfull search
+    if(my_touch.identifier === this.master_touch){ //successfull search
       return my_touch;
     }
     return null;
