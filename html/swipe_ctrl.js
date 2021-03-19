@@ -38,7 +38,7 @@ export class SwipeToDeleteController {
         e.preventDefault();
         const first_touch = e.changedTouches[0];
         this.master_touch = first_touch.identifier;
-        this.in_motion=first_touch.currentTarget;
+        this.in_motion=e.currentTarget;
         param = this.elements.get(this.in_motion);
         param.mov = 0;
         param.clientX = first_touch.clientX;
