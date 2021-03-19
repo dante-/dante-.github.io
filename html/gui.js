@@ -25,7 +25,7 @@ export class Gui {
     newLI.classList.add("friendsListItem");
     newLI.appendChild(slider);
 
-    this.swicon.add(newLI);
+    this.swicon.add(slider);
     return [newLI, newName, newSplitAmount];
   }
   static get swicon() {
@@ -216,7 +216,7 @@ export class EditGui {
 
     // create edits for pieces
     this.pieces = new CustMap();
-    amount_list.push(0);
+    amount_list = [...amount_list, 0];
     for (const piece of amount_list.map(elm => new EditGui.SoloPiece(elm, this))){
       this.pieces.set(piece);
       piece.appendTo(this.piece_container);
