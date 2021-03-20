@@ -1,5 +1,11 @@
 import {Gui, EditGui} from "./gui.js";
 
+try{
+  navigator.serviceWorker.register('./servwork.js', {
+    scope: '.'
+});
+} catch {};
+
 class SplitterEntry {
   constructor (name, update_cb) {
     [this.gui_ref, this.name_display, this.amount_display]
