@@ -81,6 +81,7 @@ div.splitAmountBox {
   background-color: red;
   position: relative;
   margin: 0px;
+  transition: left 5s;
 }
 
 .friendsListItem:nth-child(2) {

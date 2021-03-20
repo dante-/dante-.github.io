@@ -71,14 +71,24 @@ export class SwipeToDeleteController {
     param.mov= +styles.left.replace("px","");
     param.slide_open_threshold = -elm_height;
     param.move_slow_threshold = -elm_height * 2;
-    param.delete_treshold = -((elm_width - elm_height * 2) * 0.3 + elm_height * 2);
+    param.delete_threshold = -((elm_width - elm_height * 2) * 0.3 + elm_height * 2);
+    param.element_width = elm_width;
   }
   slidebox(e) {
     const htelm = this.in_motion;
     const param = this.elements.get(htelm);
-
-    htelm.style.left = param.mov += e.clientX - param.clientX;
+    //slidecontrol
+    param.mov += e.clientX - param.clientX;
     param.clientX = e.clientX;
+    if(param.mov < param.delete_threshold){
+      htelm.style.left = -(param.element_width * 0.95);
+    } else if (param.mov < param.move_slow_threshold) {
+      htelm.style.left = param.mov * 0.3 + param.move_slow_threshold * 0.7;
+    } else if (param.mov > 0) {
+      htelm.style.left = 0;
+    } else {
+      htelm.style.left = param.mov;
+    }
   }
   stopslide(e) {
     this.master_touch=null;
