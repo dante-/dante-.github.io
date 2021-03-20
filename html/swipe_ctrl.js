@@ -20,28 +20,24 @@ export class SwipeToDeleteController {
         this.in_motion.removeEventListener("mousedown",this);
         document.body.addEventListener("mousemove",this);
         document.body.addEventListener("mouseup",this);
-        param = this.elements.get(this.in_motion);
-        param.clientX = e.clientX;
-        param.mov = 0;
+        this.startslide(e);
         break;
       case "mouseup":
         document.body.removeEventListener("mouseup",this);
         document.body.removeEventListener("mousemove",this);
         this.in_motion.addEventListener("mousedown",this);
-        this.in_motion.style.left=0;
+        this.stopslide(e);
         break;
       case "mousemove":
         e.preventDefault();
         this.slidebox(e);
         break;
       case "touchstart":
-        e.preventDefault();
+        //e.preventDefault();
         const first_touch = e.changedTouches[0];
         this.master_touch = first_touch.identifier;
         this.in_motion=e.currentTarget;
-        param = this.elements.get(this.in_motion);
-        param.mov = 0;
-        param.clientX = first_touch.clientX;
+        this.startslide(first_touch);
         break;
       case "touchmove":
         if(my_touch = this.findTouch(e)) {
@@ -51,8 +47,7 @@ export class SwipeToDeleteController {
       case "touchend":
       case "touchcancel":
         if(my_touch = this.findTouch(e)){
-          this.master_touch=null;
-          this.in_motion.style.left=0;
+          this.stopslide(my_touch);
         }
         break;
     }
@@ -67,10 +62,26 @@ export class SwipeToDeleteController {
     }
     return null;
   }
+  startslide(e) {
+    const param = this.elements.get(this.in_motion);
+    param.clientX = e.clientX;
+    const styles = window.getComputedStyle(this.in_motion);
+    const elm_height= +styles.height.replace("px","");
+    const elm_width = +styles.width.replace("px","");
+    param.mov= +styles.left.replace("px","");
+    param.slide_open_threshold = -elm_height;
+    param.move_slow_threshold = -elm_height * 2;
+    param.delete_treshold = -((elm_width - elm_height * 2) * 0.3 + elm_height * 2);
+  }
   slidebox(e) {
     const htelm = this.in_motion;
     const param = this.elements.get(htelm);
+
     htelm.style.left = param.mov += e.clientX - param.clientX;
     param.clientX = e.clientX;
+  }
+  stopslide(e) {
+    this.master_touch=null;
+    this.in_motion.style.left="";
   }
 }
