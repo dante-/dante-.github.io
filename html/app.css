@@ -15,6 +15,7 @@ body {
   height: 100%;
   overflow: hidden;
   background-color: var(--global-bg-c);
+  margin: 0px;
 }
 
 input {
@@ -65,6 +66,7 @@ div.splitAmountBox {
   padding: 0px;
   margin: 0px;
   overflow: hidden;
+  align-items: flex-end;
 }
 
 .friendslistItem {
@@ -97,12 +99,12 @@ div.splitAmountBox {
 
 .friendsListItem .fli-deleter {
   background: red;
-  flex: 0 1 150px;
+  flex: 1 1 150px;
 }
 
 .friendsListItem .fli-spacer {
   background-color: black;
-  flex: 0 0 0;
+  flex: 1 0 0;
 }
 
 div.splitAmount {
