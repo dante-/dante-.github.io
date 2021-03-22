@@ -1,5 +1,4 @@
 :root {
-  /*--global-bg-c: #fff1cc*/;
   --global-bg-c: #eab6fc;
   --item-sep-col: #e088ff;
 }
@@ -19,7 +18,6 @@ body {
 }
 
 input {
-  
   font-size: 22px;
 }
 
@@ -52,9 +50,7 @@ div.button:active {
 }
 
 div.splitAmountBox {
-  /*! position: relative; */
   right: 10px;
-  /*! display: inline-block; */
   background-color: lightgray;
   border-radius: 50px;
   padding: 15px;
@@ -64,7 +60,6 @@ div.splitAmountBox {
   display: flex;
   flex-direction: column;
   width: 100%;
-  /*! left: 5%; */
   position: relative;
   list-style-type: none;
   padding: 0px;
@@ -73,15 +68,13 @@ div.splitAmountBox {
 }
 
 .friendslistItem {
-  width: 100%;
-  /*! padding: 5px; */
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-color: var(--item-sep-col, gray);
-  background-color: red;
+  background-color: darkgray;
   position: relative;
   margin: 0px;
-  transition: left 5s;
+  display: flex;
 }
 
 .friendsListItem:nth-child(2) {
@@ -93,12 +86,24 @@ div.splitAmountBox {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  /*! height: 100%; */
   background-color: var(--global-bg-c);
   padding-top: 5px;
   padding-bottom: 5px;
   position: relative;
-}               
+  left: 0px;
+  top: 0px;
+  flex: 0 0 auto;
+}          
+
+.friendsListItem .fli-deleter {
+  background: red;
+  flex: 0 1 150px;
+}
+
+.friendsListItem .fli-spacer {
+  background-color: black;
+  flex: 0 0 0;
+}
 
 div.splitAmount {
   background-color: transparent;
@@ -120,7 +125,7 @@ div.splitAmount {
 #main_interface {
   display: inherit;
   position: absolute;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
   top: 0px;
   width: 100%;
@@ -206,8 +211,6 @@ div.splitAmount {
 .mid ul {
   display: flex;
   flex-flow: column;
-  /*! height: 100%; */
-  /*! overflow: auto; */
   list-style-type: none;
   padding: 0px;
   margin: 0px;
@@ -221,4 +224,3 @@ div.splitAmount {
 .solo_piece_input {
   width: 100%;
 }
-

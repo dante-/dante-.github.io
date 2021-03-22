@@ -21,9 +21,17 @@ export class Gui {
     slider.appendChild(newName);
     slider.appendChild(newSplitBox);
 
+    const spacer = document.createElement("div");
+    spacer.classList.add("fli-spacer");
+
+    const deleter = document.createElement("div");
+    deleter.classList.add("fli-deleter");
+
     const newLI = document.createElement("li");
     newLI.classList.add("friendsListItem");
     newLI.appendChild(slider);
+    newLI.appendChild(spacer);
+    newLI.appendChild(deleter);
 
     this.swicon.add(slider);
     return [newLI, newName, newSplitAmount];
