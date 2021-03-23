@@ -77,6 +77,8 @@ div.splitAmountBox {
   position: relative;
   margin: 0px;
   display: flex;
+  width: 100%;
+  justify-content: flex-end;
 }
 
 .friendsListItem:nth-child(2) {
@@ -87,7 +89,7 @@ div.splitAmountBox {
 .friendsListSlider {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 100vw;
   background-color: var(--global-bg-c);
   padding-top: 5px;
   padding-bottom: 5px;
@@ -99,12 +101,18 @@ div.splitAmountBox {
 
 .friendsListItem .fli-deleter {
   background: red;
-  flex: 1 1 150px;
+  flex: 1 1 12vw;
 }
-
+.friendsListItem.open .fli-deleter {
+  flex-shrink: 0;
+}
+.friendsListItem.deleting .fli-spacer {
+  flex: 0 0 0;
+}
 .friendsListItem .fli-spacer {
   background-color: black;
-  flex: 1 0 0;
+  flex: 4 0 0;
+  transition: all 0.2s;
 }
 
 div.splitAmount {
@@ -137,6 +145,7 @@ div.splitAmount {
   display: none;
   justify-content: center;
   margin-top: 10%;
+  width: 100%;
 }
 
 #noFriends:only-child {

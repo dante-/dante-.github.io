@@ -1,6 +1,7 @@
 export class SwipeToDeleteController {
-  constructor() {
+  constructor(slider_query_selector) {
     this.elements = new Map();
+    this.slider_query_selector = slider_query_selector;
   }
   add(html_element, delete_callback) {
     html_element.addEventListener("mousedown",this);
@@ -68,30 +69,49 @@ export class SwipeToDeleteController {
     const styles = window.getComputedStyle(this.in_motion);
     const elm_height= +styles.height.replace("px","");
     const elm_width = +styles.width.replace("px","");
-    param.mov= +styles.left.replace("px","");
-    param.slide_open_threshold = -elm_height;
-    param.move_slow_threshold = -elm_height * 2;
-    param.delete_threshold = -((elm_width - elm_height * 2) * 0.3 + elm_height * 2);
+    param.delete_threshold = -(elm_width * 0.8)
     param.element_width = elm_width;
+    var parent_cont_width=0;
+    for (const child of this.in_motion.parentElement.childNodes){
+      parent_cont_width += +window.getComputedStyle(child).width.replace("px","");
+    }
+    param.slide_open_threshold = -(
+      +window.getComputedStyle(this.in_motion.parentElement.lastChild)
+      .flexBasis.replace("px","")
+    );
+    param.mov= param.element_width - parent_cont_width;
+    param.state = '';
   }
   slidebox(e) {
-    const htelm = this.in_motion;
-    const param = this.elements.get(htelm);
+    const htelm = this.in_motion.parentElement;
+    const param = this.elements.get(this.in_motion);
     //slidecontrol
     param.mov += e.clientX - param.clientX;
     param.clientX = e.clientX;
-    if(param.mov < param.delete_threshold){
-      htelm.style.left = -(param.element_width * 0.95);
-    } else if (param.mov < param.move_slow_threshold) {
-      htelm.style.left = param.mov * 0.3 + param.move_slow_threshold * 0.7;
-    } else if (param.mov > 0) {
-      htelm.style.left = 0;
+    if(param.state != 'deleting' && param.mov < param.delete_threshold){
+      htelm.dispatchEvent(new Event('RS_deleting'));
+      param.state = 'deleting';
+    } else if(param.state != 'open' &&
+      param.mov > param.delete_threshold &&
+      param.mov < param.slide_open_threshold
+    ){
+      htelm.dispatchEvent(new Event('RS_open'));
+      param.state = 'open';
+    } else if(param.state != 'closed' &&
+      param.mov > param.slide_open_threshold
+    ){
+      htelm.dispatchEvent(new Event('RS_close'));
+      param.state = 'closed';
+    }
+    if (param.mov > 0) {
+      htelm.style.width = param.element_width;
     } else {
-      htelm.style.left = param.mov;
+      htelm.style.width = param.element_width - param.mov;
     }
   }
   stopslide(e) {
     this.master_touch=null;
-    this.in_motion.style.left="";
+    this.in_motion.parentElement.style.width="";
+    this.in_motion.dispatchEvent(new Event("RS_slideEnd",{bubbles:true}));
   }
 }

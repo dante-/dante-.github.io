@@ -13,7 +13,8 @@ class SplitterEntry {
     this.is_rest_splitter = true;
     this.personal_slice = [];
     Gui.appendToFriendlist(this.gui_ref);
-    this.update_cb=update_cb; //has to implement method update(e)
+    this.update_cb=update_cb; //has to implement method update(e) and remove_child(e)
+    this.gui_ref.addEventListener('RS_destroy',(evt) => this.update_cb.remove_child(this));
   }
   editAmount () {
     let edit = new EditGui(this.personal_slice, this.name, this.is_rest_splitter, this);
@@ -47,16 +48,22 @@ class SplitterEntry {
     this.is_rest_splitter=is_splitter;
     this.update_cb.update(this);
   }
+  destroy(){
+    Gui.removeFromFriendlist(this.gui_ref);
+    this.is_rest_splitter=false;
+    this.personal_slice=[0];
+    this.update_cb.update(this);
+  }
 }
 
 class SplitterColl {
   constructor () {
-    this.splitters = [];
+    this.splitters = new Set();
     this.update_handlers = new Set();
   }
   add (name) {
     const newSplitter = new SplitterEntry(name,this);
-    this.splitters.push(newSplitter);
+    this.splitters.add(newSplitter);
   }
   *monetaryData () {
     for (const elm of this.splitters) {
@@ -79,6 +86,14 @@ class SplitterColl {
   update(e) { //only intended to be used for SplitterEntry
     for (const elm of this.update_handlers){
       elm.update(this);
+    }
+  }
+  remove_child(e){
+    if(this.splitters.delete(e)){
+      e.destroy();
+    } else {
+      console.log(`Failed to delete`);
+      console.log(e);
     }
   }
   handleEvent(e) {

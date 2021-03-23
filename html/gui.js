@@ -34,6 +34,29 @@ export class Gui {
     newLI.appendChild(deleter);
 
     this.swicon.add(slider);
+    newLI.addEventListener('RS_deleting', function(evt) {
+      newLI.classList.remove("open");
+      newLI.classList.add("deleting");
+    });
+    newLI.addEventListener('RS_open', function(evt) {
+      newLI.classList.remove("deleting");
+      newLI.classList.add("open");
+    });
+    newLI.addEventListener('RS_close', function(evt) {
+      newLI.classList.remove("deleting");
+      newLI.classList.remove("open");
+    });
+    newLI.addEventListener('RS_slideEnd',function(evt) {
+      if(this.classList.contains('deleting')){
+        this.addEventListener('transitionend', function(e){
+          if(e.propertyName == 'width'){
+            this.dispatchEvent(new Event('RS_destroy'));
+          }
+        });
+        this.style.transition='width 0.2s';
+        this.style.width='200%';
+      }
+    });
     return [newLI, newName, newSplitAmount];
   }
   static get swicon() {
@@ -42,6 +65,9 @@ export class Gui {
   }
   static appendToFriendlist(new_elm) {
     this.friend_list.appendChild(new_elm);
+  }
+  static removeFromFriendlist(elm) {
+    elm.parentElement.removeChild(elm);
   }
   static get friend_list() {
     delete this.friend_list;
