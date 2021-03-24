@@ -1,4 +1,5 @@
 import {SwipeToDeleteController} from "./swipe_ctrl.js";
+import * as mylib from "./mylib.js";
 
 export class Gui {
   static newFriendListItem (friendName, edit_callback) {
@@ -267,7 +268,7 @@ export class EditGui {
     } = this.metadata);
     Gui.disableInputs();
     this.edit_root.hidden=false;
-    setTimeout(() => this.edit_root.classList.add('slide_in'),5);
+    mylib.defer(5).then(() => this.edit_root.classList.add('slide_in'));
   }
   teardown () {
     this.edit_root.addEventListener('transitionend',this);
