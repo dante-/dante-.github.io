@@ -280,6 +280,9 @@ export class EditGui {
     this.callback.update?.(new_amounts, this.name, this.splits_rest);
     this.teardown()
   }
+  cancel(){
+    this.teardown();
+  }
   teardown () {
     this.edit_root.addEventListener('transitionend',this);
     this.edit_root.classList.remove('slide_in');
@@ -342,7 +345,7 @@ export class EditGui {
         this.submit();
         break;
       case "cancel_edit":
-        this.teardown();
+        this.cancel();
         break;
     }
   }
