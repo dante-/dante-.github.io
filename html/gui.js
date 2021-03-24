@@ -270,6 +270,16 @@ export class EditGui {
     this.edit_root.hidden=false;
     mylib.defer(5).then(() => this.edit_root.classList.add('slide_in'));
   }
+  submit(){
+    const new_amounts=[];
+    for (const key of this.pieces.keys()){
+      if(key.value != 0){
+        new_amounts.push(key.value);
+      }
+    }
+    this.callback.update?.(new_amounts, this.name, this.splits_rest);
+    this.teardown()
+  }
   teardown () {
     this.edit_root.addEventListener('transitionend',this);
     this.edit_root.classList.remove('slide_in');
@@ -345,16 +355,6 @@ export class EditGui {
         this.handleTransition(e);
         break;
     }
-  }
-  submit(){
-    const new_amounts=[];
-    for (const key of this.pieces.keys()){
-      if(key.value != 0){
-        new_amounts.push(key.value);
-      }
-    }
-    this.callback.update?.(new_amounts, this.name, this.splits_rest);
-    this.teardown()
   }
 }
 
