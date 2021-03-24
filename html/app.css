@@ -153,23 +153,41 @@ div.splitAmount {
 }
 
 #edit_interface {
-  display: block;
+  display: flex;
   z-index: 4;
   position: absolute;
   top: 0px;
-  width: 100%;
+  width: 100vw;
   height: 100%;
   background: #9a9a9aa0;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 #edit_interface_inner {
-  position: relative;
-  height: 100%;
-  left: 5%;
-  width: 90%;
-  margin: 0;
+  /*! position: relative; */
+  height: 85%;
+  /*! left: 5%; */
+  /*! width: auto; */
+  padding-left: 1%;
   display: flex;
   flex-flow: column;
+  flex: 0 0 min-content;
+  overflow: clip;
+  padding-right: 2%;
+  background-color: var(--global-bg-c);
+  border: solid 1px linen;
+  border-left-style: none;
+  border-radius: 0 5vw 5vw 0;
+}
+
+#edit_interface > .spacer{
+  flex: 0 0 100vw;
+  transition: all 0.3s;
+}
+
+#edit_interface.slide_in > .spacer {
+  flex-shrink: 1;
 }
 
 #edit_interface[hidden] {
@@ -188,12 +206,12 @@ div.splitAmount {
 .head {
   display: flex;
   justify-content: space-between;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
 }
 
 .mid {
   flex: 1 1 auto;
-  height: 100%;
+  /*! height: 100%; */
   overflow: auto;
 }
 
@@ -215,6 +233,12 @@ div.splitAmount {
 #isSplitter {
   display: none;
 }
+
+#isSplitter + label {
+  
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
 #username {
   max-width: 50%;
 }
@@ -233,5 +257,5 @@ div.splitAmount {
   margin: 5px 0px;
 }
 .solo_piece_input {
-  width: 100%;
+  /*! width: 100%; */
 }

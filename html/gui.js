@@ -265,16 +265,11 @@ export class EditGui {
   show () {
     Gui.disableInputs();
     this.edit_root.hidden=false;
+    setTimeout(() => this.edit_root.classList.add('slide_in'),5);
   }
   teardown () {
-    Gui.enableInputs();
-    this.edit_root.hidden=true;
-    this.name="";
-    this.splits_rest=true;
-    this.edit_root.querySelector("div.mid").removeChild(this.piece_container);
-    for (const elm of this.edit_root.querySelectorAll(".button")){
-      elm.removeEventListener("click",this);
-    }
+    this.edit_root.addEventListener('transitionend',this);
+    this.edit_root.classList.remove('slide_in');
   }
   set name(_name) {
     return this.name_box.value = _name;
@@ -317,13 +312,34 @@ export class EditGui {
       this.pieces.last.focus();
     }
   }
-  handleEvent(e) {
+  handleTransition(e) {
+    Gui.enableInputs();
+    this.edit_root.hidden=true;
+    this.name="";
+    this.splits_rest=true;
+    this.edit_root.querySelector("div.mid").removeChild(this.piece_container);
+    for (const elm of this.edit_root.querySelectorAll(".button")){
+      elm.removeEventListener("click",this);
+    }
+    this.edit_root.removeEventListener('transitionend', this);
+  }
+  handleClick(e) {
     switch(e.target?.id) {
       case "approve_edit":
         this.submit();
         break;
       case "cancel_edit":
         this.teardown();
+        break;
+    }
+  }
+  handleEvent(e) {
+    switch(e.type) {
+      case 'click':
+        this.handleClick(e);
+        break;
+      case 'transitionend':
+        this.handleTransition(e);
         break;
     }
   }
