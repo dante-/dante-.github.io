@@ -245,7 +245,6 @@ export class EditGui {
     this.name_box=edit_root.querySelector("#username");
     this.splitter_box=edit_root.querySelector("#isSplitter");
     this.piece_container=document.createElement("ul");
-    edit_root.querySelector("div.mid").appendChild(this.piece_container);
     this.edit_root=edit_root
 
     // create edits for pieces
@@ -255,14 +254,17 @@ export class EditGui {
       this.pieces.set(piece);
       piece.appendTo(this.piece_container);
     }
+    this.metadata={name,splits_rest,callback};
+  }
+  show () {
+    this.edit_root.querySelector("div.mid").appendChild(this.piece_container);
     for (const elm of this.edit_root.querySelectorAll(".button")){
       elm.addEventListener("click",this);
     }
-    this.name = name;
-    this.splits_rest = splits_rest;
-    this.callback = callback; // object with "update"-method
-  }
-  show () {
+    ({name: this.name,
+      splits_rest: this.splits_rest,
+      callback: this.callback // object with "update"-method
+    } = this.metadata);
     Gui.disableInputs();
     this.edit_root.hidden=false;
     setTimeout(() => this.edit_root.classList.add('slide_in'),5);
