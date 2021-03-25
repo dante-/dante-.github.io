@@ -18,7 +18,7 @@ class SplitterEntry {
   }
   editAmount () {
     let edit = new EditGui(this.personal_slice, this.name, this.is_rest_splitter, this);
-    edit.show();
+    edit.go().then(({amounts, name, is_splitter}) => this.update(amounts, name, is_splitter),() => {});
   }
   //getters & setters
   get pers_total() {

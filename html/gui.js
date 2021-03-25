@@ -257,30 +257,34 @@ export class EditGui {
     }
     this.metadata={name,splits_rest,callback};
   }
-  show () {
-    this.edit_root.querySelector("div.mid").appendChild(this.piece_container);
-    for (const elm of this.edit_root.querySelectorAll(".button")){
-      elm.addEventListener("click",this);
-    }
-    ({name: this.name,
-      splits_rest: this.splits_rest,
-      callback: this.callback // object with "update"-method
-    } = this.metadata);
-    Gui.disableInputs();
-    this.edit_root.hidden=false;
-    mylib.defer(5).then(() => this.edit_root.classList.add('slide_in'));
+  go () {
+    return new Promise((resolve, reject) => {
+      this.edit_root.querySelector("div.mid").appendChild(this.piece_container);
+      this.prom = {resolve, reject};
+      for (const elm of this.edit_root.querySelectorAll(".button")){
+        elm.addEventListener("click",this);
+      }
+      ({name: this.name,
+        splits_rest: this.splits_rest,
+        callback: this.callback // object with "update"-method
+      } = this.metadata);
+      Gui.disableInputs();
+      this.edit_root.hidden=false;
+      mylib.defer(5).then(() => this.edit_root.classList.add('slide_in'));
+    });
   }
   submit(){
-    const new_amounts=[];
+    const amounts=[];
     for (const key of this.pieces.keys()){
       if(key.value != 0){
-        new_amounts.push(key.value);
+        amounts.push(key.value);
       }
     }
-    this.callback.update?.(new_amounts, this.name, this.splits_rest);
+    this.prom?.resolve({amounts, name: this.name, is_splitter: this.splits_rest});
     this.teardown()
   }
   cancel(){
+    this.prom?.reject();
     this.teardown();
   }
   teardown () {
