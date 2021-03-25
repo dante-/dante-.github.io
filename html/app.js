@@ -42,28 +42,31 @@ class SplitterEntry {
   set amount(new_amount) {
     return this.amount_display.innerText = new_amount;
   }
+  notify(){
+    this.gui_ref.dispatchEvent(new Event("RS_splitterUpdate",{bubbles: true}));
+  }
   update(amounts, name, is_splitter){
     this.personal_slice=amounts;
     this.name=name;
     this.is_rest_splitter=is_splitter;
-    this.update_cb.update(this);
+    this.notify();
   }
   destroy(){
     Gui.removeFromFriendlist(this.gui_ref);
     this.is_rest_splitter=false;
     this.personal_slice=[0];
-    this.update_cb.update(this);
+    this.notify();
   }
 }
 
 class SplitterColl {
   constructor () {
     this.splitters = new Set();
-    this.update_handlers = new Set();
   }
   add (name) {
     const newSplitter = new SplitterEntry(name,this);
     this.splitters.add(newSplitter);
+    newSplitter.notify();
   }
   *monetaryData () {
     for (const elm of this.splitters) {
@@ -74,19 +77,11 @@ class SplitterColl {
       };
     }
   }
-  addUpdateListener(handler) { //must implement handler.update(SplitterColl e)
-    if(typeof(handler.update) != "function"){
-      throw(handler +"contains no function 'update'");
-    }
-    return !!this.update_handlers.add(handler);
+  addRS_splitterUpdate(handler) {
+    Gui.friend_list.addEventListener("RS_splitterUpdate",handler);
   }
-  removeUpdateListener(handler) {
-    return this.update_handlers.delete(handler);
-  }
-  update(e) { //only intended to be used for SplitterEntry
-    for (const elm of this.update_handlers){
-      elm.update(this);
-    }
+  removeRS_splitterUpdate(handler){
+    Gui.friend_list.removeEventListener("RS_splitterUpdate",handler);
   }
   remove_child(e){
     if(this.splitters.delete(e)){
@@ -129,7 +124,7 @@ const splitters = new SplitterColl();
 class MoneyManager {
   constructor (splitters) {
     this.splitters = splitters;
-    this.splitters.addUpdateListener(this);
+    this.splitters.addRS_splitterUpdate(this);
   }
   get total_amount() {
     return Gui.amountInput || 0;
@@ -164,13 +159,6 @@ class MoneyManager {
   }
   calcError(errmsg){
     console.log(errmsg);
-  }
-  update(e) {
-    //implement SplitterColl-interface
-    if(e !== this.splitters){
-      return;
-    }
-    this.updateSplitters();
   }
   handleEvent(e) {
     switch(e.type) {
