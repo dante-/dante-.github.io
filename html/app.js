@@ -122,12 +122,19 @@ class SplitterColl {
 const splitters = new SplitterColl();
 
 class MoneyManager {
-  constructor (splitters) {
+  constructor (splitters, grand_total_input) {
     this.splitters = splitters;
     this.splitters.addRS_splitterUpdate(this);
+    this.grand_total_input = grand_total_input;
   }
+
   get total_amount() {
-    return Gui.amountInput || 0;
+    return this._gti?.valueAsNumber || 0;
+  }
+  set grand_total_input(gti){
+    this._gti?.removeEventListener("change", this);
+    this._gti = gti;
+    this._gti?.addEventListener("change", this);
   }
   updateSplitters () { //calculation in cents
     let splitter_data = [...splitters.monetaryData()];
@@ -167,7 +174,7 @@ class MoneyManager {
         break;
       default:
         switch(e.target) {
-          case Gui.grand_total_input:
+          case this._gti:
             this.updateSplitters();
             break;
           default:
@@ -177,13 +184,12 @@ class MoneyManager {
   }
 }
 
-const m_manager=new MoneyManager(splitters);
+const m_manager=new MoneyManager(splitters,Gui.grand_total_input);
 
 function init() {
   //add on-clicks
   document.getElementById("addPeopleButton").addEventListener("click",splitters);
   document.getElementById("addPeopleName").addEventListener("keydown",splitters);
-  document.getElementById("rSumVal").addEventListener("change",m_manager);
   return;
 }
 
