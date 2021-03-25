@@ -173,12 +173,18 @@ class MoneyManager {
     this.updateSplitters();
   }
   handleEvent(e) {
-    switch(e.target) {
-      case Gui.grand_total_input:
+    switch(e.type) {
+      case "RS_splitterUpdate":
         this.updateSplitters();
         break;
       default:
-        console.log(e);
+        switch(e.target) {
+          case Gui.grand_total_input:
+            this.updateSplitters();
+            break;
+          default:
+            console.log(e);
+        }
     }
   }
 }
