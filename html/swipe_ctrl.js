@@ -114,4 +114,25 @@ export class SwipeToDeleteController {
     this.in_motion.parentElement.style.width="";
     this.in_motion.dispatchEvent(new Event("RS_slideEnd",{bubbles:true}));
   }
+  swipeOut(elem){
+    var transition_seconds = 0.2;
+    return new Promise((resolve, reject) => {
+      const triggerDestroy = function(e){
+        if(e.propertyName == 'width'){
+          this.removeEventListener('transitionend', triggerDestroy);
+          this.style.transition = "";
+          resolve();
+        }
+      };
+      elem.addEventListener('transitionend',triggerDestroy);
+      elem.style.transition = `width ${transition_seconds}s`;
+      elem.style.width = '200%';
+      mylib.defer(transition_seconds * 1000 + 50).then(() => {
+        //50ms after the transition should have ended.
+        elem.removeEventListener('transitionend', triggerDestroy);
+        this.style.transition = '';
+        reject();
+      });
+    });
+  }
 }
