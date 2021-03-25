@@ -22,11 +22,7 @@ class SplitterEntry {
   }
   //getters & setters
   get pers_total() {
-    let sum = 0;
-    this.personal_slice.forEach((elm) => {
-      sum += elm;
-    });
-    return sum;
+    return this.personal_slice.reduce((acc,elm) => acc + elm);
   }
 
   get name() {
