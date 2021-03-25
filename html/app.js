@@ -115,7 +115,6 @@ class SplitterColl {
     }
     this.add(name);
     Gui.nameInput="";
-    this.update();
   }
 }
 
