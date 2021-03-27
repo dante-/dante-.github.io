@@ -25,8 +25,13 @@ export class Gui {
     const spacer = document.createElement("div");
     spacer.classList.add("fli-spacer");
 
+    const trashcan = document.createElement("img");
+    trashcan.src="trashcan.svg";
+    trashcan.classList.add("trashcan");
+
     const deleter = document.createElement("div");
     deleter.classList.add("fli-deleter");
+    deleter.appendChild(trashcan);
 
     const newLI = document.createElement("li");
     newLI.classList.add("friendsListItem");
