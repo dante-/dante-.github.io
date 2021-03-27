@@ -44,6 +44,8 @@ export class Gui {
       newLI.classList.remove("open");
       newLI.classList.add("deleting");
     });
+
+    deleter.addEventListener('click', () => newLI.dispatchEvent(new Event('RS_destroy')))
     newLI.addEventListener('RS_open', function(evt) {
       newLI.classList.remove("deleting");
       newLI.classList.add("open");
