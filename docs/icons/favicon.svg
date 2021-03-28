@@ -44,13 +44,13 @@
      inkscape:guide-bbox="true"
      inkscape:snap-bbox="false"
      inkscape:snap-page="true"
-     inkscape:zoom="7.9834048"
-     inkscape:cx="29.70732"
-     inkscape:cy="8.9021367"
+     inkscape:zoom="90.509668"
+     inkscape:cx="29.976096"
+     inkscape:cy="1.7956976"
      inkscape:window-x="432"
      inkscape:window-y="47"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg23" />
+     inkscape:current-layer="layer1" />
   <rect
      id="svg_14"
      height="0"
@@ -68,12 +68,12 @@
      id="layer1"
      inkscape:label="Layer 1">
     <rect
-       style="fill:#2361ff;fill-opacity:1;stroke:none;stroke-width:0.3125"
+       style="fill:#2361ff;fill-opacity:1;stroke:#2361ff;stroke-width:7.61293;stroke-linejoin:round;stroke-miterlimit:3;stroke-dasharray:none;stroke-opacity:1"
        id="rect976"
-       width="32"
-       height="32"
-       x="0"
-       y="0" />
+       width="24.361401"
+       height="24.361401"
+       x="3.8179977"
+       y="3.8264813" />
   </g>
   <g
      inkscape:groupmode="layer"
