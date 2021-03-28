@@ -1,7 +1,7 @@
 import {Gui, EditGui} from "./gui.js";
 
 try{
-  navigator.serviceWorker.register('./servwork.js', {
+  navigator.serviceWorker.register('/receipt-splitter/servwork.js', {
     scope: '.'
 });
 } catch {};
