@@ -99,7 +99,8 @@ div.splitAmountBox {
 
 .friendsListSlider {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
+  align-items: baseline;
   width: 100vw;
   background-color: var(--global-bg-c);
   padding-top: 5px;

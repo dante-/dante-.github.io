@@ -19,8 +19,8 @@ export class Gui {
 
     const slider = document.createElement("div");
     slider.classList.add("friendsListSlider");
-    slider.appendChild(newName);
     slider.appendChild(newSplitBox);
+    slider.appendChild(newName);
 
     const spacer = document.createElement("div");
     spacer.classList.add("fli-spacer");
