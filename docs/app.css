@@ -20,7 +20,7 @@ header img {
 
 body {
   font-size-adjust: 1.3;
-  font-size: 22;
+  font-size: medium;
   display: flex;
   flex-flow: column;
   height: 100%;
@@ -249,14 +249,14 @@ div.splitAmount {
 }
 
 #isSplitter:checked + label {
-  background-color: green;  
+  background-color: green;
 }
 #isSplitter {
   display: none;
 }
 
 #isSplitter + label {
-  
+
   white-space: nowrap;
   flex: 0 0 auto;
 }
